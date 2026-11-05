@@ -1,0 +1,3 @@
+0 ordinario
+1 organico
+2 reciclable
