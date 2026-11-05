@@ -11,7 +11,7 @@ from PIL import Image, ImageOps
 # ================== CONFIGURACIÓN ==================
 BROKER = "broker.hivemq.com"
 PUERTO = 1883
-PREFIJO = "nicolemp/tribin"      # debe ser IGUAL al del sketch del ESP32
+PREFIJO = "nicolemp7391/tribin"  # debe ser IGUAL al del sketch del ESP32
 TOPIC_ABRIR = f"{PREFIJO}/abrir"
 TOPIC_ESTADO = f"{PREFIJO}/estado"
 UMBRAL = 0.99                    # 0.99 = "100%" en Teachable Machine
@@ -126,7 +126,7 @@ if st.session_state.pantalla == "entrada":
         subida = st.file_uploader("…o sube una foto", type=["jpg", "jpeg", "png"], key=f"up{n}")
         archivo = foto or subida
         if archivo and st.button("Analizar foto", type="primary", key=f"bf{n}"):
-            imagen = Image.open(archivo)
+            imagen = Image.open(archivo).convert("RGB")
             top, conf, probs = clasificar_imagen(imagen)
             for nombre, p in sorted(probs.items(), key=lambda x: -x[1]):
                 st.progress(p, text=f"{nombre}: {p*100:.1f}%")
