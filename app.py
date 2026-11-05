@@ -9,7 +9,7 @@ from keras.models import load_model
 from PIL import Image, ImageOps
 
 # ================== CONFIGURACIÓN ==================
-BROKER = "broker.hivemq.com"
+BROKER = "broker.mqttdashboard.com"
 PUERTO = 1883
 PREFIJO = "nicolemp7391/tribin"  # debe ser IGUAL al del sketch del ESP32
 TOPIC_ABRIR = f"{PREFIJO}/abrir"
