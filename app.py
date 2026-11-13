@@ -43,7 +43,15 @@ CSS = """
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.55  0 0 0 0 0.45  0 0 0 0 0.25  0 0 0 0.07 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
   color:var(--texto);
 }
-html, body, [class*="st-"], .stMarkdown, p, label{ font-family:'Nunito',sans-serif; }
+html, body, .stApp, .stMarkdown, p, label, input, textarea, button{ font-family:'Nunito',sans-serif; }
+
+/* Los íconos de Streamlit necesitan su propia fuente */
+[data-testid="stIconMaterial"],
+.material-symbols-rounded,
+span[class*="material"]{
+  font-family:'Material Symbols Rounded' !important;
+  font-weight:400 !important;
+}
 
 /* Quitar elementos de Streamlit que ensucian */
 #MainMenu, footer, header[data-testid="stHeader"]{ visibility:hidden; height:0; }
@@ -99,6 +107,16 @@ div[data-baseweb="tab-panel"]{
   background:var(--sol); color:#5A3E10; box-shadow:0 4px 0 #C98F22;
 }
 .stButton > button:focus-visible{ outline:3px solid var(--tejado); outline-offset:2px; }
+
+/* Botones internos de subir archivo y cámara (más pequeños) */
+[data-testid="stFileUploaderDropzone"] [data-testid="stBaseButton-secondary"],
+[data-testid="stCameraInput"] [data-testid="stBaseButton-secondary"],
+[data-testid="stFileUploaderDropzone"] button,
+[data-testid="stCameraInput"] button{
+  font-family:'Nunito',sans-serif; font-size:.95rem; font-weight:700;
+  padding:.4rem 1rem; border-radius:14px 12px 16px 10px;
+  background:var(--sol); color:#5A3E10; box-shadow:0 3px 0 #C98F22; border:none;
+}
 
 /* Campos */
 .stTextInput input{
