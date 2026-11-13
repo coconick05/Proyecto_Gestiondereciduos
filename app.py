@@ -1,4 +1,5 @@
 import base64
+import io
 import os
 import threading
 import unicodedata
@@ -138,7 +139,8 @@ div[data-baseweb="tab-panel"]{
 [data-testid="stAlert"]{ border-radius:20px 16px 22px 14px; border:none; }
 
 /* Foto analizada como foto pegada */
-[data-testid="stImage"] img{
+.foto{
+  display:block; width:250px; max-width:100%; height:auto; margin:.6rem 0 1.2rem;
   border:8px solid var(--papel); border-radius:10px;
   box-shadow:0 6px 16px rgba(90,70,30,.18); transform:rotate(-1.5deg);
 }
@@ -164,6 +166,16 @@ def hero_html() -> str:
     with open(IMAGEN_HEADER, "rb") as f:
         b64 = base64.b64encode(f.read()).decode()
     return f"<img class='hero' alt='Planeta con símbolo de reciclaje' src='data:image/png;base64,{b64}'/>"
+
+
+def foto_html(img: Image.Image) -> str:
+    """Foto del residuo incrustada en la página (no depende del servidor de medios)."""
+    img = img.convert("RGB")
+    img.thumbnail((600, 600))
+    buf = io.BytesIO()
+    img.save(buf, format="JPEG", quality=88)
+    b64 = base64.b64encode(buf.getvalue()).decode()
+    return f"<img class='foto' alt='Residuo analizado' src='data:image/jpeg;base64,{b64}'/>"
 
 
 CATEGORIAS = {
@@ -308,7 +320,7 @@ elif st.session_state.pantalla == "resultado":
     cat = st.session_state.categoria
     etiqueta, color = CATEGORIAS[cat]
     if st.session_state.get("imagen") is not None:
-        st.image(st.session_state.imagen, width=250)
+        st.markdown(foto_html(st.session_state.imagen), unsafe_allow_html=True)
     st.write("Va en la caneca:")
     st.markdown(f"<div class='resultado' style='background:{color}'>{etiqueta}</div>",
                 unsafe_allow_html=True)
